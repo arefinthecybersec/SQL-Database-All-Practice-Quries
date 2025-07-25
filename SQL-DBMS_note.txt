@@ -1,0 +1,208 @@
+## Create table in a SQL database:
+CREATE TABLE Persons (
+    PersonID INT,
+    LastName VARCHAR(255),
+    FirstName VARCHAR(255),
+    Address VARCHAR(255),
+    City VARCHAR(100)
+);
+
+
+## Data insert into a table:
+
+Insert into persons (PersonId, FirstName, LastName, Address, City)
+Values
+(1, 'Arefin', 'Hossain', 'Bahaddarhat St 4302', 'Çtg'),
+(2, 'Arman', 'Hossen', 'Pabna St 6302', 'Pabna'),
+(3, 'Osman', 'Goni', 'Dhaka St 3302', 'Dhaka');
+
+
+## In existing table include a new column (structural change, like: Email add)
+
+alter table persons add Email varchar(255);
+alter table persons add Email varchar(255) after lastname;
+alter table persons add Email varchar(255) before personid;
+
+
+## Delete Function:
+
+-> In a table delete all data except header row:
+  truncate table persons;
+
+-> In a table delete all data also delete header row:
+  drop table persons;
+
+--------------------------------------------------------------------
+
+## Create Table 2:
+-> Create and declare also foreign key:
+
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    OrderDate DATE,
+    PersonID INT,
+    FOREIGN KEY (PersonID) REFERENCES     Persons2(PersonID)
+);
+
+-> Insert data:
+
+insert into orders (OrderID, OrderDate, PersonID
+values
+(101, '2025-07-21', 3),
+(102, '2025-07-22', 2),
+(103, '2025-07-23', 1);
+
+--------------------------------------------------------------------
+
+## Comment a line in Database:
+-- (space)
+
+--------------------------------------------------------------------
+
+## Read Data:
+- Show all data in a table:
+  select * from StudentPersonal
+
+## Update Data:
+- Update in a specific row based data:
+  update studentpersonal set city = 'Los Angles' where studentid = 1;
+
+## Delete Data:
+- Delete in a entire row in table:
+  delete from studentpersonal where studentid = 5;
+
+## Data Sorting (order by, ASC, DEC):
+- select firstname, lastname from studentpersonal order by lastname
+- select firstname, lastname from studentpersonal order by ASC
+- select firstname, lastname from studentpersonal order by DESC
+
+## Date Sorting:
+- select * from payment order by paymentdate ASC;
+
+## Distinct Sort:
+- select distinct city from studentpersonal
+
+--------------------------------------------------------------------
+
+## Like Function:
+% mean as a string
+_ mean as a character
+  select firstname, lastname from studentpersonal where fathername like 'J__%';
+
+## Where Function:
+- select firstname, lastname, city from studentpersonal where city in ('Houston', 'Boston', 'Chicago');
+- select firstname, lastname, city from studentpersonal where city not in ('Houston', 'Boston'); 
+
+## Between Function:
+- Select studentid, firstname, lastname from studentpersonal where studentid between 1 and 5;
+
+## Union & Union All Function:
+- Select city from studentpersonal UNION select city from teacherpersonal;   [distinct]
+- Select city from studentpersonal UNION ALL select city from teacherpersonal; [dupicate]
+
+--------------------------------------------------------------------
+
+## Aggregate Function:
+Count:
+- Select * from payment where amouny > 500;  (show details)
+- select count(*) as countAmount from  payment where amount > 500; (show only count value)
+
+Sum:
+- Select sum(amount) as total_fees_paid from payment;
+
+Avg:
+- Select avg(amount) as avg_fees_paid from payment;
+
+Max:
+- Select max(amount) as max_fees_paid from payment;
+
+Min:
+- Select min(amount) as min_fees_paid from payment;
+
+--------------------------------------------------------------------
+
+## Group by Function:
+Group by City:
+- select city, count(*) from studentpersonal group by city;
+
+Having:
+- select city, count(*) from studentpersonal group by city having count(*) > 1;
+
+--------------------------------------------------------------------
+
+## Sub-Query Function:
+1. 
+-> Non-payments id's are displayed:
+select firstname, lastname from studentpersonal
+where studentid not in (
+     select studentid from payment;
+);
+
+
+2.
+-> show in extra not updated database:
+select
+	studentid,
+	totalsemesterfees,
+	CASE
+	    when totalsemesterfees < 1500 then 'low'
+	    when totalsemesterfees between 1500 and 1800 then 'medium'
+	    else 'high'
+	end as fee_category
+From studentacademic;
+
+-> Updated in database:
+update teacheracademic
+set Designation =
+	CASE
+	    when Designation = 'Lecturer' then 'Sr. Lecturer'
+	    when Designation = 'Sr. Lecturer' then 'Associate Professor'
+	    else Designation
+	end;
+
+--------------------------------------------------------------------
+
+## Join Queries:
+
+-> Inner Join:
+select sp.studentid, sp.firstname, sp.lastname, sa.semester
+from studentpersonal sp
+inner join studentacademic sa
+on sp.studentId = sa.studentId;
+
+-> Left Join: (left side focused)
+select sp.studentid, sp.firstname, sp.lastname, sa.semester
+from studentpersonal sp
+left join studentacademic sa
+on sp.studentId = sa.studentId;
+
+-> Right Join: (right side focused)
+select sp.studentid, sp.firstname, sp.lastname, sa.semester
+from studentpersonal sp
+right join studentacademic sa
+on sp.studentId = sa.studentId;
+
+-> Full Outer Join: (left & right both side focused)
+select sp.studentid, sp.firstname, sp.lastname, sa.semester
+from studentpersonal sp
+left join studentacademic sa
+on sp.studentId = sa.studentId;
+
+Union
+
+select sp.studentid, sp.firstname, sp.lastname, sa.semester
+from studentpersonal sp
+right join studentacademic sa
+on sp.studentId = sa.studentId;
+
+
+======xxxxxxxxx==========xxxxxxxxxx======xxxxxxx=======xxxxxxxx
+END
+
+
+
+
+
+
+
+
