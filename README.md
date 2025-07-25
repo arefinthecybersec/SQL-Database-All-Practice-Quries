@@ -5,6 +5,13 @@ This repository contains a structured practice set for mastering the basics of S
 
 ---
 
+📄 Full Practice Document
+
+Access the full solved questions and screenshots here:  
+🔗 [Google Doc Link](https://docs.google.com/document/d/1_XFCnjpskCF-ArvNetijCw3rpeEPBKWpBgzuuRXjNtI/edit?usp=sharing)
+
+---
+
 🧰 Software Used
 - Database Engine: MySQL
 - SQL Client: DBeaver
